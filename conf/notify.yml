@@ -1,0 +1,21 @@
+tablename: t_data_notify
+
+canal:
+  destinations:
+    - example
+    - memory
+  address: node253
+  port: 11111
+  username:
+  password:
+  batchsize: 100
+
+kafka:
+  address:
+    - node254:6667
+    - node253:6667
+    - node236:6667
+
+hbase:
+  zkQuorum: node253:2181
+  zkRoot: /hbase-unsecure
