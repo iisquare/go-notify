@@ -75,8 +75,6 @@ func notice(message *protocol.Message) []map[string]interface{} {
 		case protocol.EntryType_ROWDATA:
 			item["entryTypeName"] = "ROWDATA"
 			rowChange := new(protocol.RowChange)
-			item["isDdl"] = rowChange.GetIsDdl()
-			item["sql"] = rowChange.GetSql()
 			err := proto.Unmarshal(entry.GetStoreValue(), rowChange)
 			if err != nil {
 				item["error"] = err.Error()
@@ -85,6 +83,8 @@ func notice(message *protocol.Message) []map[string]interface{} {
 			if rowChange == nil {
 				break
 			}
+			item["isDdl"] = rowChange.GetIsDdl()
+			item["sql"] = rowChange.GetSql()
 			eventType := rowChange.GetEventType()
 			item["eventType"] = eventType
 			item["schemaName"] = header.GetSchemaName()
