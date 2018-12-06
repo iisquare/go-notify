@@ -48,6 +48,7 @@ func (this *Client) get(connector *client.SimpleCanalConnector, channel chan *Ch
 		batchId := message.Id
 		if batchId == -1 || len(message.Entries) <= 0 {
 			time.Sleep(300 * time.Millisecond)
+			connector.Ack(batchId)
 			continue
 		}
 		channel <- &ChanItem{

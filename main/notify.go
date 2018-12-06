@@ -63,6 +63,8 @@ func notice(message *protocol.Message) []map[string]interface{} {
 		item["logfileName"] = header.GetLogfileName()
 		item["logfileOffset"] = strconv.FormatInt(header.GetLogfileOffset(),10)
 		item["executeTime"] = header.GetExecuteTime()
+		item["schemaName"] = header.GetSchemaName()
+		item["tableName"] = header.GetTableName()
 		entryType := entry.GetEntryType()
 		item["entryType"] = entryType
 		switch entryType {
@@ -83,12 +85,10 @@ func notice(message *protocol.Message) []map[string]interface{} {
 			if rowChange == nil {
 				break
 			}
+			eventType := rowChange.GetEventType()
 			item["isDdl"] = rowChange.GetIsDdl()
 			item["sql"] = rowChange.GetSql()
-			eventType := rowChange.GetEventType()
 			item["eventType"] = eventType
-			item["schemaName"] = header.GetSchemaName()
-			item["tableName"] = header.GetTableName()
 			var rowDatas []map[string]interface{}
 			for _, rowData := range rowChange.GetRowDatas() {
 				row := make(map[string]interface{})
